@@ -1,6 +1,5 @@
-import { Button } from '@/6_shared/ui/button'
-import Image from 'next/image'
+import { MobileLayout } from '@/6_shared/ui/MobileLayout'
 
 export default function Home() {
-  return <Button>오호</Button>
+  return <div className="p-4">모바일 메인</div>
 }
