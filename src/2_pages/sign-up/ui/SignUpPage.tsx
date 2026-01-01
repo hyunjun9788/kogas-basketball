@@ -1,8 +1,11 @@
 import { SignUpSection } from '3_widgets/sign-up-section'
+import { KogasIcon } from '@/6_shared/assets/images'
 
 export default function SignUpPage() {
   return (
     <div className="flex flex-col items-center p-6">
+      <KogasIcon className="h-50 w-50" />
+
       <div className="flex flex-col items-center">
         <h1 className="mb-2 text-3xl font-bold">회원가입</h1>
         <p className="text-gray-500">
