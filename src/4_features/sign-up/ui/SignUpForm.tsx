@@ -5,12 +5,12 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '@/6_shared/ui/form'
+} from '@/6_shared/ui/Form'
 import { SignUpFormValues, signUpSchema } from '../model/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Input } from '@/6_shared/ui/input'
+import { Input } from '@/6_shared/ui/Input'
 import { useForm } from 'react-hook-form'
-import { Button } from '@/6_shared/ui/button'
+import { Button } from '@/6_shared/ui/Button'
 
 export const SignUpForm = () => {
   const form = useForm<SignUpFormValues>({

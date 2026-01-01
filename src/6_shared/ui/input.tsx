@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { cn } from '@/6_shared/lib/utils'
 
+//파일명 수정
 function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
   return (
     <input
