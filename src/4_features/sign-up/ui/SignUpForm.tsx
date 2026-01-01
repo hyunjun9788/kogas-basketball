@@ -10,6 +10,7 @@ import { SignUpFormValues, signUpSchema } from '../model/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/6_shared/ui/input'
 import { useForm } from 'react-hook-form'
+import { Button } from '@/6_shared/ui/button'
 
 export const SignUpForm = () => {
   const form = useForm<SignUpFormValues>({
@@ -96,6 +97,7 @@ export const SignUpForm = () => {
             </FormItem>
           )}
         />
+        <Button className="h-12 text-[16px]">회원가입</Button>
       </form>
     </Form>
   )
