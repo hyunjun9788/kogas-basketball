@@ -5,6 +5,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/6_shared/ui/Form'
 import { SignUpFormValues, signUpSchema } from '../model/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -63,6 +64,7 @@ export const SignUpForm = () => {
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -74,11 +76,13 @@ export const SignUpForm = () => {
                 <FormLabel>비밀번호</FormLabel>
                 <FormControl>
                   <Input
+                    type="password"
                     placeholder="8자 이상 입력"
                     className="text-4 h-12.5 md:text-sm"
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -90,11 +94,13 @@ export const SignUpForm = () => {
                 <FormLabel>비밀번호 확인</FormLabel>
                 <FormControl>
                   <Input
+                    type="password"
                     placeholder="비밀번호 재입력"
                     className="text-4 h-12.5 md:text-sm"
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
