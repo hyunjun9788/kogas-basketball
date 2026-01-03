@@ -12,6 +12,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/6_shared/ui/Input'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/6_shared/ui/Button'
+import { supabase } from '@/6_shared/config/supabase'
+import { signUp } from '../api'
 
 export const SignUpForm = () => {
   const form = useForm<SignUpFormValues>({
@@ -24,8 +26,20 @@ export const SignUpForm = () => {
     },
   })
 
-  const onSubmit = (data: SignUpFormValues) => {
+  const onSubmit = async (data: SignUpFormValues) => {
     console.log('회원가입 요청 데이터:', data)
+
+    try {
+      await signUp({
+        email: data.email,
+        password: data.password,
+        nickname: data.nickname,
+      })
+
+      console.log('성공')
+    } catch (error) {
+      console.log('가입 실패')
+    }
   }
 
   return (
