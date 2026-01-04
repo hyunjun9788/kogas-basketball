@@ -14,9 +14,15 @@ import { useForm } from 'react-hook-form'
 import { Button } from '@/6_shared/ui/Button'
 import { checkNicknameDuplicate, signUp } from '../api'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+
+import { toast } from 'sonner'
 
 export const SignUpForm = () => {
+  const router = useRouter()
+
   const [successMessage, setSuccessMessage] = useState('')
+
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -26,6 +32,7 @@ export const SignUpForm = () => {
       nickname: '',
     },
   })
+
   const handleNicknameCheck = async (value: string) => {
     const nickname = form.getValues('nickname')
 
@@ -58,10 +65,14 @@ export const SignUpForm = () => {
         password: data.password,
         nickname: data.nickname,
       })
-
-      console.log('성공')
-    } catch (error) {
-      console.log('가입 실패')
+      toast.success('회원가입을 축하합니다! 🎉', {
+        duration: 3000,
+      })
+      router.push('/')
+    } catch (error: any) {
+      toast.error('회원가입에 실패했습니다😢', {
+        description: error.message || '잠시 후 다시 시도해주세요.',
+      })
     }
   }
 

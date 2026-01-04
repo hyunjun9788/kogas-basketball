@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { MobileLayout } from '@/6_shared/ui/MobileLayout'
 import localFont from 'next/font/local'
+import { Toaster } from '@/6_shared/ui/sonner'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,7 +37,10 @@ export default function RootLayout({
       <body
         className={`${pretendard.className} ${geistMono.variable} antialiased`}
       >
-        <MobileLayout>{children}</MobileLayout>
+        <MobileLayout>
+          {children}
+          <Toaster position="top-center" richColors />
+        </MobileLayout>
       </body>
     </html>
   )
