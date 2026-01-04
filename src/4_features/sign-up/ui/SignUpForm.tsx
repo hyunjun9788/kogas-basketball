@@ -17,10 +17,11 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { toast } from 'sonner'
+import { createClient } from '@/6_shared/config/supabase'
 
 export const SignUpForm = () => {
   const router = useRouter()
-
+  const supabase = createClient()
   const [successMessage, setSuccessMessage] = useState('')
 
   const form = useForm<SignUpFormValues>({
@@ -60,10 +61,9 @@ export const SignUpForm = () => {
     console.log('회원가입 요청 데이터:', data)
 
     try {
-      await signUp({
+      await supabase.auth.signUp({
         email: data.email,
         password: data.password,
-        nickname: data.nickname,
       })
       toast.success('회원가입을 축하합니다! 🎉', {
         duration: 3000,

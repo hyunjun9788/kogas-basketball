@@ -1,7 +1,9 @@
-import { supabase } from '@/6_shared/config/supabase'
+import { createClient } from '@/6_shared/config/supabase'
 import { SignUpParams } from '../model/types'
 
 export const signUp = async ({ email, password, nickname }: SignUpParams) => {
+  const supabase = createClient()
+
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
     password,
@@ -23,6 +25,7 @@ export const signUp = async ({ email, password, nickname }: SignUpParams) => {
 }
 
 export const checkNicknameDuplicate = async (nickname: string) => {
+  const supabase = createClient()
   const { data, error } = await supabase
     .from('profiles')
     .select('nickname')
