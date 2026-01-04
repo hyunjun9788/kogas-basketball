@@ -12,10 +12,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/6_shared/ui/Input'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/6_shared/ui/Button'
-import { supabase } from '@/6_shared/config/supabase'
-import { signUp } from '../api'
+import { checkNicknameDuplicate, signUp } from '../api'
+import { useState } from 'react'
 
 export const SignUpForm = () => {
+  const [successMessage, setSuccessMessage] = useState('')
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -25,6 +26,28 @@ export const SignUpForm = () => {
       nickname: '',
     },
   })
+  const handleNicknameCheck = async (value: string) => {
+    const nickname = form.getValues('nickname')
+
+    if (!nickname) {
+      form.setError('nickname', {
+        message: '닉네임은 2글자 이상이어야 합니다.',
+      })
+      return
+    }
+
+    const isDuplicate = await checkNicknameDuplicate(value)
+    if (isDuplicate) {
+      console.log(isDuplicate)
+      form.setError('nickname', {
+        type: 'manual',
+        message: '이미 사용중인 닉네임입니다😢',
+      })
+    } else {
+      form.clearErrors('nickname')
+      setSuccessMessage('사용 가능한 닉네임입니다! 🎉')
+    }
+  }
 
   const onSubmit = async (data: SignUpFormValues) => {
     console.log('회원가입 요청 데이터:', data)
@@ -56,15 +79,36 @@ export const SignUpForm = () => {
               <FormItem>
                 <FormLabel>닉네임</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="ex) 엔젤란겔"
-                    className="text-4 h-12.5 md:text-sm"
-                    {...field}
-                  />
+                  <div className="flex items-center gap-2">
+                    <Input
+                      placeholder="ex) 엔젤란겔"
+                      className="text-4 h-12.5 md:text-sm"
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e)
+                        setSuccessMessage('')
+                        form.clearErrors('nickname')
+                      }}
+                    />
+                    <Button
+                      type="button"
+                      className="h-full text-[16pxr]"
+                      onClick={() => handleNicknameCheck(field.value)}
+                    >
+                      중복 확인
+                    </Button>
+                  </div>
                 </FormControl>
+                <FormMessage />
+                {successMessage && (
+                  <p className="mt-1 text-sm font-medium text-green-600">
+                    {successMessage}
+                  </p>
+                )}
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="email"
