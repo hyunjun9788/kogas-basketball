@@ -20,7 +20,6 @@ import { toast } from 'sonner'
 
 export const SignUpForm = () => {
   const router = useRouter()
-  const [successMessage, setSuccessMessage] = useState('')
 
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
@@ -29,9 +28,10 @@ export const SignUpForm = () => {
       password: '',
       confirmPassword: '',
       nickname: '',
+      isNicknameVerified: false,
     },
   })
-
+  const isNicknameVerified = form.watch('isNicknameVerified')
   const handleNicknameCheck = async (value: string) => {
     const nickname = form.getValues('nickname')
 
@@ -49,23 +49,15 @@ export const SignUpForm = () => {
         type: 'manual',
         message: '이미 사용중인 닉네임입니다😢',
       })
+      form.setValue('isNicknameVerified', false)
     } else {
       form.clearErrors('nickname')
-      setSuccessMessage('사용 가능한 닉네임입니다! 🎉')
+      form.setValue('isNicknameVerified', true)
     }
   }
 
   const onSubmit = async (data: SignUpFormValues) => {
     console.log('회원가입 요청 데이터:', data)
-
-    if (!successMessage) {
-      form.setError('nickname', {
-        type: 'manual',
-        message: '닉네임 중복 확인 해주세요😢',
-      })
-      form.setFocus('nickname')
-      return
-    }
 
     try {
       await signUp({
@@ -105,13 +97,16 @@ export const SignUpForm = () => {
                       {...field}
                       onChange={(e) => {
                         field.onChange(e)
-                        setSuccessMessage('')
-                        form.clearErrors('nickname')
+                        if (form.getValues('isNicknameVerified')) {
+                          form.setValue('isNicknameVerified', false)
+                          form.clearErrors('nickname')
+                        }
                       }}
                     />
                     <Button
                       type="button"
                       className="h-full text-[16pxr]"
+                      disabled={isNicknameVerified}
                       onClick={() => handleNicknameCheck(field.value)}
                     >
                       중복 확인
@@ -119,9 +114,9 @@ export const SignUpForm = () => {
                   </div>
                 </FormControl>
                 <FormMessage />
-                {successMessage && (
+                {isNicknameVerified && (
                   <p className="mt-1 text-sm font-medium text-green-600">
-                    {successMessage}
+                    사용 가능한 닉네임입니다! 🎉
                   </p>
                 )}
               </FormItem>

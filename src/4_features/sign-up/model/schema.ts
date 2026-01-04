@@ -17,10 +17,15 @@ export const signUpSchema = z
     nickname: z
       .string()
       .min(2, { message: '닉네임은 2글자 이상이어야 합니다.' }),
+    isNicknameVerified: z.boolean(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
     message: '비밀번호가 일치하지 않습니다.',
+  })
+  .refine((data) => data.isNicknameVerified === true, {
+    path: ['nickname'],
+    message: '닉네임 중복 확인을 해주세요.',
   })
 
 export type SignUpFormValues = z.infer<typeof signUpSchema>
