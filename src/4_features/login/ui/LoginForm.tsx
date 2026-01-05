@@ -30,8 +30,6 @@ export const LoginForm = () => {
   })
 
   const onSubmit = async (data: LoginFormValues) => {
-    console.log(data)
-
     try {
       await login(data)
 
@@ -41,7 +39,6 @@ export const LoginForm = () => {
 
       router.push('/')
     } catch (error: any) {
-      console.log('error', error.message)
       if (error.message === 'Invalid login credentials') {
         form.setError('password', {
           type: 'manual',
