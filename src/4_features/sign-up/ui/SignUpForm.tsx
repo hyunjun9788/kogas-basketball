@@ -13,7 +13,6 @@ import { Input } from '@/6_shared/ui/Input'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/6_shared/ui/Button'
 import { checkNicknameDuplicate, signUp } from '../api'
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { toast } from 'sonner'
@@ -44,7 +43,6 @@ export const SignUpForm = () => {
 
     const isDuplicate = await checkNicknameDuplicate(value)
     if (isDuplicate) {
-      console.log(isDuplicate)
       form.setError('nickname', {
         type: 'manual',
         message: '이미 사용중인 닉네임입니다😢',
@@ -57,7 +55,6 @@ export const SignUpForm = () => {
   }
 
   const onSubmit = async (data: SignUpFormValues) => {
-    console.log('회원가입 요청 데이터:', data)
 
     try {
       await signUp({
