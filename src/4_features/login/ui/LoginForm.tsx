@@ -14,8 +14,13 @@ import { loginSchema } from '../model/schema'
 import { Input } from '@/6_shared/ui/Input'
 import { Button } from '@/6_shared/ui/Button'
 import Link from 'next/link'
+import { LoginFormValues } from '../model/types'
+import { login } from '../api'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 export const LoginForm = () => {
+  const router = useRouter()
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -24,8 +29,30 @@ export const LoginForm = () => {
     },
   })
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: LoginFormValues) => {
     console.log(data)
+
+    try {
+      await login(data)
+
+      toast.success('로그인 되었습니다! 👋', {
+        duration: 3000,
+      })
+
+      router.push('/')
+    } catch (error: any) {
+      console.log('error', error.message)
+      if (error.message === 'Invalid login credentials') {
+        form.setError('password', {
+          type: 'manual',
+          message: '이메일 또는 비밀번호를 확인해주세요',
+        })
+      } else {
+        toast.error('로그인 실패', {
+          description: '잠시 후 다시 시도해주세요',
+        })
+      }
+    }
   }
 
   return (
