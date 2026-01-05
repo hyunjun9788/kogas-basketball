@@ -33,8 +33,8 @@ export const SignUpForm = () => {
   const isNicknameVerified = form.watch('isNicknameVerified')
   const handleNicknameCheck = async (value: string) => {
     const nickname = form.getValues('nickname')
-
-    if (!nickname) {
+    
+    if (nickname.length<2) {
       form.setError('nickname', {
         message: '닉네임은 2글자 이상이어야 합니다.',
       })
