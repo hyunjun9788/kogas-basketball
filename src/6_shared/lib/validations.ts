@@ -1,13 +1,11 @@
 import { z } from 'zod'
 
-// 이메일 스키마
 export const emailSchema = z
   .string()
   .refine((value) => /\S+@\S+\.\S+/.test(value), {
     message: '올바른 이메일 형식이 아닙니다.',
   })
 
-// 비밀번호 스키마
 export const passwordSchema = z
   .string()
   .min(8, { message: '비밀번호는 8자 이상이어야 합니다.' })
@@ -17,7 +15,6 @@ export const passwordSchema = z
     message: '특수문자(!@#$%^&*)를 포함해야 합니다.',
   })
 
-// 비밀번호 확인 refine
 export const confirmPasswordRefine = {
   validate: (data: { password: string; confirmPassword: string }) =>
     data.password === data.confirmPassword,

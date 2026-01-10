@@ -4,7 +4,6 @@ import * as React from 'react'
 import * as LabelPrimitive from '@radix-ui/react-label'
 
 import { cn } from '@/6_shared/lib/utils'
-//파일명 수정
 
 function Label({
   className,
