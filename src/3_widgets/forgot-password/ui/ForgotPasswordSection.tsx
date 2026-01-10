@@ -1,4 +1,4 @@
-import { ForgotPasswordForm } from '@/4_features/forgotPasswordForm/ui/ForgotPasswordForm'
+import { ForgotPasswordForm } from '@/4_features/forgot-password/ui/ForgotPasswordForm'
 
 export const ForgotPasswordSection = () => {
   return <ForgotPasswordForm />

@@ -14,6 +14,7 @@ import {
 } from '@/6_shared/ui/Form'
 import { Input } from '@/6_shared/ui/Input'
 import { Button } from '@/6_shared/ui/Button'
+import { toast } from 'sonner'
 
 export const ForgotPasswordForm = () => {
   const form = useForm({
@@ -26,6 +27,10 @@ export const ForgotPasswordForm = () => {
   const onSubmit = async (data: ForgotPasswordFormValues) => {
     try {
       await sendForgotPasswordEmail(data.email)
+
+      toast.success('재설정 링크가 이메일로 전송되었습니다! 👋', {
+        duration: 3000,
+      })
     } catch (error: any) {}
   }
 

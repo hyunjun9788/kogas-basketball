@@ -10,45 +10,39 @@ import {
 } from '@/6_shared/ui/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { loginSchema } from '../model/schema'
 import { Input } from '@/6_shared/ui/Input'
 import { Button } from '@/6_shared/ui/Button'
-import Link from 'next/link'
-import { LoginFormValues } from '../model/types'
-import { login } from '../api'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { resetPassword } from '../api'
+import { signOut } from '@/4_features/sign-out/api'
+import { ResetPasswordFormValues, resetPasswordSchema } from '../model/schema'
 
-export const LoginForm = () => {
+export const ResetPasswordForm = () => {
   const router = useRouter()
   const form = useForm({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      email: '',
       password: '',
+      confirmPassword: '',
     },
   })
 
-  const onSubmit = async (data: LoginFormValues) => {
+  const onSubmit = async (data: ResetPasswordFormValues) => {
     try {
-      await login(data)
+      await resetPassword({ newPassword: data.password })
 
-      toast.success('로그인 되었습니다! 👋', {
+      await signOut()
+
+      toast.success('비밀번호 변경 되었습니다! 👋', {
         duration: 3000,
       })
 
-      router.push('/')
+      router.push('/login')
     } catch (error: any) {
-      if (error.message === 'Invalid login credentials') {
-        form.setError('password', {
-          type: 'manual',
-          message: '이메일 또는 비밀번호를 확인해주세요',
-        })
-      } else {
-        toast.error('로그인 실패', {
-          description: '잠시 후 다시 시도해주세요',
-        })
-      }
+      toast.error('비밀번호 변경 실패', {
+        description: '잠시 후 다시 시도해주세요',
+      })
     }
   }
 
@@ -61,28 +55,10 @@ export const LoginForm = () => {
         <div className="mb-5 flex flex-1 flex-col gap-5">
           <FormField
             control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>이메일</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="user@example.com"
-                    className="text-4 h-12.5 md:text-sm"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>비밀번호</FormLabel>
+                <FormLabel>새 비밀번호</FormLabel>
                 <FormControl>
                   <Input
                     type="password"
@@ -95,22 +71,27 @@ export const LoginForm = () => {
               </FormItem>
             )}
           />
-          <div className="flex items-center justify-between gap-2">
-            <Link href="/forgot-password" className="text-main font-medium">
-              비밀번호 찾기
-            </Link>
-            <div>
-              <span className="mr-2 text-gray-500">계정이 없으신가요?</span>
-              <Link
-                href="/sign-up"
-                className="text-main text-[16px] font-medium"
-              >
-                회원가입
-              </Link>
-            </div>
-          </div>
+
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>비밀번호 확인</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="8자 이상 입력"
+                    className="text-4 h-12.5 md:text-sm"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-        <Button className="h-12 text-[16px]">로그인</Button>
+        <Button className="h-12 text-[16px]">비밀번호 변경하기</Button>
       </form>
     </Form>
   )

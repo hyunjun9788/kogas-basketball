@@ -1,3 +1,5 @@
+import { ResetPasswordPage } from '2_pages/reset-password/ui/ResetPage'
+
 export default function ResetPassword() {
-  return <div>ResetPassword</div>
+  return <ResetPasswordPage />
 }
