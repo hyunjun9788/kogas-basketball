@@ -1,4 +1,4 @@
-import { SignUpSection } from '3_widgets/sign-up-section'
+import { SignUpForm } from '@/4_features/sign-up'
 import { KogasIcon } from '@/6_shared/assets/images'
 
 export default function SignUpPage() {
@@ -13,7 +13,7 @@ export default function SignUpPage() {
           <span>환영합니다</span>
         </p>
       </div>
-      <SignUpSection />
+      <SignUpForm />
     </div>
   )
 }
