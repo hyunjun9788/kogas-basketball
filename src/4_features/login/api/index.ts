@@ -1,5 +1,5 @@
 import { createClient } from '@/6_shared/config/supabase'
-import { LoginFormValues } from '../model/types'
+import { LoginFormValues } from '../model/schema'
 
 export const login = async ({ email, password }: LoginFormValues) => {
   const supabase = createClient()

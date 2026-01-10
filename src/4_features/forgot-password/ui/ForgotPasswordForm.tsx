@@ -31,7 +31,11 @@ export const ForgotPasswordForm = () => {
       toast.success('재설정 링크가 이메일로 전송되었습니다! 👋', {
         duration: 3000,
       })
-    } catch (error: any) {}
+    } catch (error: any) {
+      toast.error('이메일 전송에 실패했습니다', {
+        description: '잠시 후 다시 시도해주세요',
+      })
+    }
   }
 
   return (

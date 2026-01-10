@@ -14,7 +14,7 @@ import { loginSchema } from '../model/schema'
 import { Input } from '@/6_shared/ui/Input'
 import { Button } from '@/6_shared/ui/Button'
 import Link from 'next/link'
-import { LoginFormValues } from '../model/types'
+import { LoginFormValues } from '../model/schema'
 import { login } from '../api'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
@@ -110,7 +110,12 @@ export const LoginForm = () => {
             </div>
           </div>
         </div>
-        <Button className="h-12 text-[16px]">로그인</Button>
+        <Button
+          disabled={form.formState.isSubmitting}
+          className="h-12 text-[16px]"
+        >
+          {form.formState.isSubmitting ? '처리 중...' : '로그인'}
+        </Button>
       </form>
     </Form>
   )
