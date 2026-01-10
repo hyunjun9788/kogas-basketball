@@ -1,4 +1,4 @@
-import { ForgotPasswordSection } from '3_widgets/forgot-password/ui/ForgotPasswordSection'
+import { ForgotPasswordForm } from '@/4_features/forgot-password'
 import { KogasIcon } from '@/6_shared/assets/images'
 
 export default function ForgotPage() {
@@ -13,7 +13,7 @@ export default function ForgotPage() {
           <span>비밀번호 재설정 링크를 보내드립니다</span>
         </p>
       </div>
-      <ForgotPasswordSection />
+      <ForgotPasswordForm />
       <div className="mt-10 flex gap-2 bg-gray-100 p-5">
         <div>이미지</div>
         <div>
