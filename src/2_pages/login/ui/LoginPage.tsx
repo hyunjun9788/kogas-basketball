@@ -1,4 +1,4 @@
-import { LoginSection } from '3_widgets/login-section'
+import { LoginForm } from '@/4_features/login'
 import { KogasIcon } from '@/6_shared/assets/images'
 
 export default function LoginPage() {
@@ -13,7 +13,7 @@ export default function LoginPage() {
           <span>환영합니다</span>
         </p>
       </div>
-      <LoginSection />
+      <LoginForm />
     </div>
   )
 }
