@@ -1,4 +1,5 @@
 import { ForgotPasswordForm } from '@/4_features/forgot-password'
+import { EmailIcon } from '@/6_shared/assets/icons'
 import { KogasIcon } from '@/6_shared/assets/images'
 
 export default function ForgotPage() {
@@ -14,8 +15,8 @@ export default function ForgotPage() {
         </p>
       </div>
       <ForgotPasswordForm />
-      <div className="mt-10 flex gap-2 bg-gray-100 p-5">
-        <div>이미지</div>
+      <div className="mt-10 flex gap-3 bg-gray-100 p-5">
+        <EmailIcon className="h-10 w-10" />
         <div>
           <div className="text-main text-xl">이메일을 확인하세요</div>
           <div>링크를 받으신 후 10분 이내에 비밀번호를 재설정해주세요</div>
